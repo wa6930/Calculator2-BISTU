@@ -20,15 +20,16 @@ public class MainActivity extends AppCompatActivity {
     private static String TAG = "ErJike";
     private int bracketPoint = 0;//用来防止左右括号不对应
     private int numberIn = 0;
+    private String logNegativeS="";//暂存log里的inputText，取消时方便恢复
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         View.OnClickListener normalOperationListener = null;
-        if(this.getResources().getConfiguration().orientation== Configuration.ORIENTATION_LANDSCAPE){
+        if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE) {
             Log.i(TAG, "横屏landscape ");
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main_land);
-            numberIn=1;
+            numberIn = 1;
             normalOperationListener = new View.OnClickListener() {
                 EditText outText;
                 TextView inputText;
@@ -260,15 +261,15 @@ public class MainActivity extends AppCompatActivity {
                             outText = (EditText) findViewById(R.id.OutputTextView2);
                             inputText = (TextView) findViewById(R.id.InputTextView);
                             if ((outText.getText().toString().equals("") || outText.getText() == null) && (numberIn != 0)
-                                    &&!inputText.getText().toString().equals("")&&inputText.getText()!=null) {
-                                midinput=inputText.getText().toString();
-                                int l=midinput.length();
-                                Log.i(TAG, "onClickPercentage: "+l);
-                                boolean tag=true;
-                                String outNumber="";
-                                while (tag==true){
+                                    && !inputText.getText().toString().equals("") && inputText.getText() != null) {
+                                midinput = inputText.getText().toString();
+                                int l = midinput.length();
+                                Log.i(TAG, "onClickPercentage: " + l);
+                                boolean tag = true;
+                                String outNumber = "";
+                                while (tag == true) {
                                     String bdsnumber = midinput.substring(l - 1, l);
-                                    Log.i(TAG, "onClickBDsnumber: "+bdsnumber);
+                                    Log.i(TAG, "onClickBDsnumber: " + bdsnumber);
                                     switch (bdsnumber) {//防止异常处理影响退格
                                         case "0":
                                         case "1":
@@ -281,35 +282,39 @@ public class MainActivity extends AppCompatActivity {
                                         case "8":
                                         case "9":
                                         case ".":
-                                            outNumber=outNumber+bdsnumber;
+                                            outNumber = outNumber + bdsnumber;
                                             //numberIn = 1;//默认前方的为数字
                                             break;
+                                        case "-":
+                                            if ((l > 1) && (midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("-") ||
+                                                    midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("*") || midinput.substring(l - 2, l - 1).equals("/"))) {
+                                                outNumber = outNumber + bdsnumber;
+                                            } else tag = false;
                                         default:
-                                            tag=false;
+                                            tag = false;
 
 
                                     }
-                                    if(l==1){
+                                    if (l == 1) {
                                         break;
                                     }
                                     l--;
 
 
                                 }
-                                midinput=midinput.substring(0,midinput.length()-outNumber.length());
-                                String out2="";
-                                for (int i=0;i<outNumber.length();i++){
-                                    String bdnumber = outNumber.substring(outNumber.length() - 1-i, outNumber.length()-i);
-                                    out2=out2+bdnumber;
+                                midinput = midinput.substring(0, midinput.length() - outNumber.length());
+                                String out2 = "";
+                                for (int i = 0; i < outNumber.length(); i++) {
+                                    String bdnumber = outNumber.substring(outNumber.length() - 1 - i, outNumber.length() - i);
+                                    out2 = out2 + bdnumber;
 
                                 }
-                                double outDouble=Double.valueOf(out2)*0.01;
-                                inputText.setText(midinput+String.valueOf(outDouble));
-                            }
-                            else if(!outText.getText().toString().equals("")){
-                                numberIn=1;
-                                midinput=outText.getText().toString();
-                                double outDouble=Double.valueOf(midinput)*0.01;
+                                double outDouble = Double.valueOf(out2) * 0.01;
+                                inputText.setText(midinput + String.valueOf(outDouble));
+                            } else if (!outText.getText().toString().equals("")) {
+                                numberIn = 1;
+                                midinput = outText.getText().toString();
+                                double outDouble = Double.valueOf(midinput) * 0.01;
                                 inputText.setText(String.valueOf(outDouble));
                                 outText.setText("");
 
@@ -367,13 +372,13 @@ public class MainActivity extends AppCompatActivity {
                             outText = (EditText) findViewById(R.id.OutputTextView2);
                             inputText = (TextView) findViewById(R.id.InputTextView);
                             if ((outText.getText().toString().equals("") || outText.getText() == null) && (numberIn != 0)
-                                    &&!inputText.getText().toString().equals("")&&inputText.getText()!=null) {
-                                midinput=inputText.getText().toString();
-                                int l=midinput.length();
-                                Log.i(TAG, "onClickPercentage: "+l);
-                                boolean tag=true;
-                                String outNumber="";
-                                while (tag==true){
+                                    && !inputText.getText().toString().equals("") && inputText.getText() != null) {
+                                midinput = inputText.getText().toString();
+                                int l = midinput.length();
+                                Log.i(TAG, "onClickPercentage: " + l);
+                                boolean tag = true;
+                                String outNumber = "";
+                                while (tag == true) {
                                     String bdsnumber = midinput.substring(l - 1, l);
                                     //Log.v(TAG, "onClickBDsnumber: "+bdsnumber);
                                     switch (bdsnumber) {//防止异常处理影响退格
@@ -388,39 +393,42 @@ public class MainActivity extends AppCompatActivity {
                                         case "8":
                                         case "9":
                                         case ".":
-                                            outNumber=outNumber+bdsnumber;
+                                            outNumber = outNumber + bdsnumber;
                                             //numberIn = 1;//默认前方的为数字
                                             break;
+                                        case "-":
+                                            if ((l > 1) && (midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("-") ||
+                                                    midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("*") || midinput.substring(l - 2, l - 1).equals("/"))) {
+                                                outNumber = outNumber + bdsnumber;
+                                            } else tag = false;
                                         default:
-                                            tag=false;
+                                            tag = false;
 
 
                                     }
-                                    if(l==1){
+                                    if (l == 1) {
                                         break;
                                     }
                                     l--;
 
 
                                 }
-                                midinput=midinput.substring(0,midinput.length()-outNumber.length());
-                                String out2="";
-                                for (int i=0;i<outNumber.length();i++){
-                                    String bdnumber = outNumber.substring(outNumber.length() - 1-i, outNumber.length()-i);
-                                    out2=out2+bdnumber;
+                                midinput = midinput.substring(0, midinput.length() - outNumber.length());
+                                String out2 = "";
+                                for (int i = 0; i < outNumber.length(); i++) {
+                                    String bdnumber = outNumber.substring(outNumber.length() - 1 - i, outNumber.length() - i);
+                                    out2 = out2 + bdnumber;
 
                                 }
-                                double outDouble=Double.valueOf(out2)*Double.valueOf(out2);
-                                inputText.setText(midinput+String.valueOf(outDouble));
+                                double outDouble = Double.valueOf(out2) * Double.valueOf(out2);
+                                inputText.setText(midinput + String.valueOf(outDouble));
 
-                            }
-                            else if(!outText.getText().toString().equals("")){
-                                numberIn=1;
-                                midinput=outText.getText().toString();
-                                double outDouble=Double.valueOf(midinput)*Double.valueOf(midinput);
+                            } else if (!outText.getText().toString().equals("")) {
+                                numberIn = 1;
+                                midinput = outText.getText().toString();
+                                double outDouble = Double.valueOf(midinput) * Double.valueOf(midinput);
                                 inputText.setText(String.valueOf(outDouble));
                                 outText.setText("");
-
 
 
                             }
@@ -431,15 +439,15 @@ public class MainActivity extends AppCompatActivity {
                             outText = (EditText) findViewById(R.id.OutputTextView2);
                             inputText = (TextView) findViewById(R.id.InputTextView);
                             if ((outText.getText().toString().equals("") || outText.getText() == null) && (numberIn != 0)
-                                    &&!inputText.getText().toString().equals("")&&inputText.getText()!=null) {
-                                midinput=inputText.getText().toString();
-                                int l=midinput.length();
-                                Log.i(TAG, "onClickPercentage: "+l);
-                                boolean tag=true;
-                                String outNumber="";
-                                while (tag==true){
+                                    && !inputText.getText().toString().equals("") && inputText.getText() != null) {
+                                midinput = inputText.getText().toString();
+                                int l = midinput.length();
+                                Log.i(TAG, "onClickPercentage: " + l);
+                                boolean tag = true;
+                                String outNumber = "";
+                                while (tag == true) {
                                     String bdsnumber = midinput.substring(l - 1, l);
-                                    Log.i(TAG, "onClickBDsnumber: "+bdsnumber);
+                                    Log.i(TAG, "onClickBDsnumber: " + bdsnumber);
                                     switch (bdsnumber) {//防止异常处理影响退格
                                         case "0":
                                         case "1":
@@ -452,39 +460,42 @@ public class MainActivity extends AppCompatActivity {
                                         case "8":
                                         case "9":
                                         case ".":
-                                            outNumber=outNumber+bdsnumber;
+                                            outNumber = outNumber + bdsnumber;
                                             //numberIn = 1;//默认前方的为数字
                                             break;
+                                        case "-":
+                                            if ((l > 1) && (midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("-") ||
+                                                    midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("*") || midinput.substring(l - 2, l - 1).equals("/"))) {
+                                                outNumber = outNumber + bdsnumber;
+                                            } else tag = false;
                                         default:
-                                            tag=false;
+                                            tag = false;
 
 
                                     }
-                                    if(l==1){
+                                    if (l == 1) {
                                         break;
                                     }
                                     l--;
 
 
                                 }
-                                midinput=midinput.substring(0,midinput.length()-outNumber.length());
-                                String out2="";
-                                for (int i=0;i<outNumber.length();i++){
-                                    String bdnumber = outNumber.substring(outNumber.length() - 1-i, outNumber.length()-i);
-                                    out2=out2+bdnumber;
+                                midinput = midinput.substring(0, midinput.length() - outNumber.length());
+                                String out2 = "";
+                                for (int i = 0; i < outNumber.length(); i++) {
+                                    String bdnumber = outNumber.substring(outNumber.length() - 1 - i, outNumber.length() - i);
+                                    out2 = out2 + bdnumber;
 
                                 }
-                                double outDouble=Double.valueOf(out2);
-                                inputText.setText(midinput+String.valueOf(Math.sin(outDouble)));
+                                double outDouble = Double.valueOf(out2);
+                                inputText.setText(midinput + String.valueOf(Math.sin(outDouble)));
 
-                            }
-                            else if(!outText.getText().toString().equals("")){
-                                numberIn=1;
-                                midinput=outText.getText().toString();
-                                double outDouble=Math.sin(Double.valueOf(midinput));
+                            } else if (!outText.getText().toString().equals("")) {
+                                numberIn = 1;
+                                midinput = outText.getText().toString();
+                                double outDouble = Math.sin(Double.valueOf(midinput));
                                 inputText.setText(String.valueOf(outDouble));
                                 outText.setText("");
-
 
 
                             }
@@ -494,15 +505,15 @@ public class MainActivity extends AppCompatActivity {
                             outText = (EditText) findViewById(R.id.OutputTextView2);
                             inputText = (TextView) findViewById(R.id.InputTextView);
                             if ((outText.getText().toString().equals("") || outText.getText() == null) && (numberIn != 0)
-                                    &&!inputText.getText().toString().equals("")&&inputText.getText()!=null) {
-                                midinput=inputText.getText().toString();
-                                int l=midinput.length();
-                                Log.i(TAG, "onClickPercentage: "+l);
-                                boolean tag=true;
-                                String outNumber="";
-                                while (tag==true){
+                                    && !inputText.getText().toString().equals("") && inputText.getText() != null) {
+                                midinput = inputText.getText().toString();
+                                int l = midinput.length();
+                                Log.i(TAG, "onClickPercentage: " + l);
+                                boolean tag = true;
+                                String outNumber = "";
+                                while (tag == true) {
                                     String bdsnumber = midinput.substring(l - 1, l);
-                                    Log.i(TAG, "onClickBDsnumber: "+bdsnumber);
+                                    Log.i(TAG, "onClickBDsnumber: " + bdsnumber);
                                     switch (bdsnumber) {//防止异常处理影响退格
                                         case "0":
                                         case "1":
@@ -515,39 +526,42 @@ public class MainActivity extends AppCompatActivity {
                                         case "8":
                                         case "9":
                                         case ".":
-                                            outNumber=outNumber+bdsnumber;
+                                            outNumber = outNumber + bdsnumber;
                                             //numberIn = 1;//默认前方的为数字
                                             break;
+                                        case "-":
+                                            if ((l > 1) && (midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("-") ||
+                                                    midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("*") || midinput.substring(l - 2, l - 1).equals("/"))) {
+                                                outNumber = outNumber + bdsnumber;
+                                            } else tag = false;
                                         default:
-                                            tag=false;
+                                            tag = false;
 
 
                                     }
-                                    if(l==1){
+                                    if (l == 1) {
                                         break;
                                     }
                                     l--;
 
 
                                 }
-                                midinput=midinput.substring(0,midinput.length()-outNumber.length());
-                                String out2="";
-                                for (int i=0;i<outNumber.length();i++){
-                                    String bdnumber = outNumber.substring(outNumber.length() - 1-i, outNumber.length()-i);
-                                    out2=out2+bdnumber;
+                                midinput = midinput.substring(0, midinput.length() - outNumber.length());
+                                String out2 = "";
+                                for (int i = 0; i < outNumber.length(); i++) {
+                                    String bdnumber = outNumber.substring(outNumber.length() - 1 - i, outNumber.length() - i);
+                                    out2 = out2 + bdnumber;
 
                                 }
-                                double outDouble=Double.valueOf(out2);
-                                inputText.setText(midinput+String.valueOf(Math.cos(outDouble)));
+                                double outDouble = Double.valueOf(out2);
+                                inputText.setText(midinput + String.valueOf(Math.cos(outDouble)));
 
-                            }
-                            else if(!outText.getText().toString().equals("")){
-                                numberIn=1;
-                                midinput=outText.getText().toString();
-                                double outDouble=Math.cos(Double.valueOf(midinput));
+                            } else if (!outText.getText().toString().equals("")) {
+                                numberIn = 1;
+                                midinput = outText.getText().toString();
+                                double outDouble = Math.cos(Double.valueOf(midinput));
                                 inputText.setText(String.valueOf(outDouble));
                                 outText.setText("");
-
 
 
                             }
@@ -558,15 +572,15 @@ public class MainActivity extends AppCompatActivity {
                             outText = (EditText) findViewById(R.id.OutputTextView2);
                             inputText = (TextView) findViewById(R.id.InputTextView);
                             if ((outText.getText().toString().equals("") || outText.getText() == null) && (numberIn != 0)
-                                    &&!inputText.getText().toString().equals("")&&inputText.getText()!=null) {
-                                midinput=inputText.getText().toString();
-                                int l=midinput.length();
-                                Log.i(TAG, "onClickPercentage: "+l);
-                                boolean tag=true;
-                                String outNumber="";
-                                while (tag==true){
+                                    && !inputText.getText().toString().equals("") && inputText.getText() != null) {
+                                midinput = inputText.getText().toString();
+                                int l = midinput.length();
+                                Log.i(TAG, "onClickPercentage: " + l);
+                                boolean tag = true;
+                                String outNumber = "";
+                                while (tag == true) {
                                     String bdsnumber = midinput.substring(l - 1, l);
-                                    Log.i(TAG, "onClickBDsnumber: "+bdsnumber);
+                                    Log.i(TAG, "onClickBDsnumber: " + bdsnumber);
                                     switch (bdsnumber) {//防止异常处理影响退格
                                         case "0":
                                         case "1":
@@ -579,42 +593,172 @@ public class MainActivity extends AppCompatActivity {
                                         case "8":
                                         case "9":
                                         case ".":
-                                            outNumber=outNumber+bdsnumber;
+                                            outNumber = outNumber + bdsnumber;
                                             //numberIn = 1;//默认前方的为数字
                                             break;
+                                        case "-":
+                                            if ((l > 1) && (midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("-") ||
+                                                    midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("*") || midinput.substring(l - 2, l - 1).equals("/"))) {
+                                                outNumber = outNumber + bdsnumber;
+                                            } else tag = false;
                                         default:
-                                            tag=false;
+                                            tag = false;
 
 
                                     }
-                                    if(l==1){
+                                    if (l == 1) {
                                         break;
                                     }
                                     l--;
 
 
                                 }
-                                midinput=midinput.substring(0,midinput.length()-outNumber.length());
-                                String out2="";
-                                for (int i=0;i<outNumber.length();i++){
-                                    String bdnumber = outNumber.substring(outNumber.length() - 1-i, outNumber.length()-i);
-                                    out2=out2+bdnumber;
+                                midinput = midinput.substring(0, midinput.length() - outNumber.length());
+                                String out2 = "";
+                                for (int i = 0; i < outNumber.length(); i++) {
+                                    String bdnumber = outNumber.substring(outNumber.length() - 1 - i, outNumber.length() - i);
+                                    out2 = out2 + bdnumber;
 
                                 }
-                                double outDouble=Double.valueOf(out2);
-                                inputText.setText(midinput+String.valueOf(Math.tan(outDouble)));
+                                double outDouble = Double.valueOf(out2);
+                                inputText.setText(midinput + String.valueOf(Math.tan(outDouble)));
 
-                            }
-                            else if(!outText.getText().toString().equals("")){
-                                numberIn=1;
-                                midinput=outText.getText().toString();
-                                double outDouble=Math.tan(Double.valueOf(midinput));
+                            } else if (!outText.getText().toString().equals("")) {
+                                numberIn = 1;
+                                midinput = outText.getText().toString();
+                                double outDouble = Math.tan(Double.valueOf(midinput));
                                 inputText.setText(String.valueOf(outDouble));
                                 outText.setText("");
 
 
+                            }
+                            break;
+                        case R.id.buttonLn://ln
+                            Log.i("OnClick", "ln");//DEBUG:测试输入
+                            outText = (EditText) findViewById(R.id.OutputTextView2);
+                            inputText = (TextView) findViewById(R.id.InputTextView);
+                            if ((outText.getText().toString().equals("") || outText.getText() == null) && (numberIn != 0)
+                                    && !inputText.getText().toString().equals("") && inputText.getText() != null) {
+                                midinput = inputText.getText().toString();
+                                int l = midinput.length();
+                                Log.i(TAG, "onClickPercentage: " + l);
+                                boolean tag = true;
+                                String outNumber = "";
+                                while (tag == true) {
+                                    String bdsnumber = midinput.substring(l - 1, l);
+                                    Log.i(TAG, "onClickBDsnumber: " + bdsnumber);
+                                    switch (bdsnumber) {//防止异常处理影响退格
+                                        case "0":
+                                        case "1":
+                                        case "2":
+                                        case "3":
+                                        case "4":
+                                        case "5":
+                                        case "6":
+                                        case "7":
+                                        case "8":
+                                        case "9":
+                                        case ".":
+                                            outNumber = outNumber + bdsnumber;
+                                            //numberIn = 1;//默认前方的为数字
+                                            break;
+                                        case "-":
+                                            if ((l > 1) && (midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("-") ||
+                                                    midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("*") || midinput.substring(l - 2, l - 1).equals("/"))) {
+                                                outNumber = outNumber + bdsnumber;
+                                            } else tag = false;
+                                        default:
+                                            tag = false;
+
+
+                                    }
+                                    if (l == 1) {
+                                        break;
+                                    }
+                                    l--;
+
+
+                                }
+                                midinput = midinput.substring(0, midinput.length() - outNumber.length());
+                                String out2 = "";
+                                for (int i = 0; i < outNumber.length(); i++) {
+                                    String bdnumber = outNumber.substring(outNumber.length() - 1 - i, outNumber.length() - i);
+                                    out2 = out2 + bdnumber;
+
+                                }
+                                double outDouble = Double.valueOf(out2);
+                                inputText.setText(midinput + String.valueOf(Math.log(outDouble)));
+
+                            } else if (!outText.getText().toString().equals("")) {
+                                numberIn = 1;
+                                midinput = outText.getText().toString();
+                                double outDouble = Math.log(Double.valueOf(midinput));
+                                inputText.setText(String.valueOf(outDouble));
+                                outText.setText("");
+
 
                             }
+                            break;
+                        case R.id.buttonLog://开根号
+                            Log.i("OnClick", "计算loga(x)");//DEBUG:测试输入
+                            outText = (EditText) findViewById(R.id.OutputTextView2);
+                            inputText = (TextView) findViewById(R.id.InputTextView);
+                            AlertDialog.Builder dialogRoot = new AlertDialog.Builder(MainActivity.this);
+                            dialogRoot.setTitle("输入要运算的log的数（或表达式）");
+                            final LayoutInflater logDialog = getLayoutInflater();
+                            final View logView = logDialog.inflate(R.layout.log_layout, null);
+                            dialogRoot.setView(logView);
+                            final EditText ET_x = logView.findViewById(R.id.textXin);
+                            final EditText ET_a = logView.findViewById(R.id.textAin);
+                            if (!outText.getText().toString().equals("") || outText.getText() == null) {
+                                logNegativeS=inputText.getText().toString();
+                                inputText.setText("");
+                                ET_x.setText(outText.getText().toString());
+
+                            }
+                            else {
+                                logNegativeS="";
+                            }
+                            dialogRoot.setPositiveButton("计算", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    //Toast.makeText(MainActivity.this,"填写确定监听事件",Toast.LENGTH_SHORT).show();
+                                    if(!ET_a.getText().toString().equals("")&&!ET_x.getText().toString().equals("")){
+                                        double x=CalculationCode.calculate(ET_x.getText().toString());
+                                        double a=CalculationCode.calculate(ET_a.getText().toString());
+                                        double d=Math.log(a)/Math.log(x);
+                                        if(!logNegativeS.equals("")){//判断outText是否有值
+
+                                            inputText.setText(String.valueOf(d));
+                                        }//outText有值
+                                        else{
+                                            midinput=inputText.getText().toString();
+                                            inputText.setText(midinput+d);
+                                        }
+                                        outText.setText("");
+                                    }
+                                    else{
+                                        Toast.makeText(MainActivity.this,"必须大于零，二者均不能为空",Toast.LENGTH_LONG);
+                                    }
+
+                                }
+                            });
+                            dialogRoot.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    if(logNegativeS.equals("")){
+
+                                    }
+                                    else{
+                                        inputText.setText(logNegativeS);
+
+                                    }
+
+                                }
+                            });
+                            dialogRoot.show();
+                            numberIn = 1;
+
                             break;
                         default:
 
@@ -622,16 +766,20 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             };
-            Button buttonSin =(Button)findViewById(R.id.buttonSin);//sin
+            Button buttonSin = (Button) findViewById(R.id.buttonSin);//sin
             buttonSin.setOnClickListener(normalOperationListener);
-            Button buttonCos =(Button)findViewById(R.id.buttonCos);//cos
+            Button buttonCos = (Button) findViewById(R.id.buttonCos);//cos
             buttonCos.setOnClickListener(normalOperationListener);
-            Button buttonTan =(Button)findViewById(R.id.buttonTAN);//tan
+            Button buttonTan = (Button) findViewById(R.id.buttonTAN);//tan
             buttonTan.setOnClickListener(normalOperationListener);
+            Button buttonLn = (Button) findViewById(R.id.buttonLn);//ln
+            buttonLn.setOnClickListener(normalOperationListener);
+            Button buttonLog = (Button) findViewById(R.id.buttonLog);//log
+            buttonLog.setOnClickListener(normalOperationListener);
 
 
-        }
-        else if(this.getResources().getConfiguration().orientation== Configuration.ORIENTATION_PORTRAIT){
+        }//横屏布局与监听器
+        else if (this.getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             Log.i(TAG, "竖屏portrait");
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_main);
@@ -866,15 +1014,15 @@ public class MainActivity extends AppCompatActivity {
                             outText = (EditText) findViewById(R.id.OutputTextView2);
                             inputText = (TextView) findViewById(R.id.InputTextView);
                             if ((outText.getText().toString().equals("") || outText.getText() == null) && (numberIn != 0)
-                                    &&!inputText.getText().toString().equals("")&&inputText.getText()!=null) {
-                                midinput=inputText.getText().toString();
-                                int l=midinput.length();
-                                Log.i(TAG, "onClickPercentage: "+l);
-                                boolean tag=true;
-                                String outNumber="";
-                                while (tag==true){
+                                    && !inputText.getText().toString().equals("") && inputText.getText() != null) {
+                                midinput = inputText.getText().toString();
+                                int l = midinput.length();
+                                Log.i(TAG, "onClickPercentage: " + l);
+                                boolean tag = true;
+                                String outNumber = "";
+                                while (tag == true) {
                                     String bdsnumber = midinput.substring(l - 1, l);
-                                    Log.i(TAG, "onClickBDsnumber: "+bdsnumber);
+                                    Log.i(TAG, "onClickBDsnumber: " + bdsnumber);
                                     switch (bdsnumber) {//防止异常处理影响退格
                                         case "0":
                                         case "1":
@@ -887,35 +1035,39 @@ public class MainActivity extends AppCompatActivity {
                                         case "8":
                                         case "9":
                                         case ".":
-                                            outNumber=outNumber+bdsnumber;
+                                            outNumber = outNumber + bdsnumber;
                                             //numberIn = 1;//默认前方的为数字
                                             break;
+                                        case "-":
+                                            if ((l > 1) && (midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("-") ||
+                                                    midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("*") || midinput.substring(l - 2, l - 1).equals("/"))) {
+                                                outNumber = outNumber + bdsnumber;
+                                            } else tag = false;
                                         default:
-                                            tag=false;
+                                            tag = false;
 
 
                                     }
-                                    if(l==1){
+                                    if (l == 1) {
                                         break;
                                     }
                                     l--;
 
 
                                 }
-                                midinput=midinput.substring(0,midinput.length()-outNumber.length());
-                                String out2="";
-                                for (int i=0;i<outNumber.length();i++){
-                                    String bdnumber = outNumber.substring(outNumber.length() - 1-i, outNumber.length()-i);
-                                    out2=out2+bdnumber;
+                                midinput = midinput.substring(0, midinput.length() - outNumber.length());
+                                String out2 = "";
+                                for (int i = 0; i < outNumber.length(); i++) {
+                                    String bdnumber = outNumber.substring(outNumber.length() - 1 - i, outNumber.length() - i);
+                                    out2 = out2 + bdnumber;
 
                                 }
-                                double outDouble=Double.valueOf(out2)*0.01;
-                                inputText.setText(midinput+String.valueOf(outDouble));
-                            }
-                            else if(!outText.getText().toString().equals("")){
-                                numberIn=1;
-                                midinput=outText.getText().toString();
-                                double outDouble=Double.valueOf(midinput)*0.01;
+                                double outDouble = Double.valueOf(out2) * 0.01;
+                                inputText.setText(midinput + String.valueOf(outDouble));
+                            } else if (!outText.getText().toString().equals("")) {
+                                numberIn = 1;
+                                midinput = outText.getText().toString();
+                                double outDouble = Double.valueOf(midinput) * 0.01;
                                 inputText.setText(String.valueOf(outDouble));
                                 outText.setText("");
 
@@ -973,13 +1125,13 @@ public class MainActivity extends AppCompatActivity {
                             outText = (EditText) findViewById(R.id.OutputTextView2);
                             inputText = (TextView) findViewById(R.id.InputTextView);
                             if ((outText.getText().toString().equals("") || outText.getText() == null) && (numberIn != 0)
-                                    &&!inputText.getText().toString().equals("")&&inputText.getText()!=null) {
-                                midinput=inputText.getText().toString();
-                                int l=midinput.length();
-                                Log.i(TAG, "onClickPercentage: "+l);
-                                boolean tag=true;
-                                String outNumber="";
-                                while (tag==true){
+                                    && !inputText.getText().toString().equals("") && inputText.getText() != null) {
+                                midinput = inputText.getText().toString();
+                                int l = midinput.length();
+                                Log.i(TAG, "onClickPercentage: " + l);
+                                boolean tag = true;
+                                String outNumber = "";
+                                while (tag == true) {
                                     String bdsnumber = midinput.substring(l - 1, l);
                                     //Log.v(TAG, "onClickBDsnumber: "+bdsnumber);
                                     switch (bdsnumber) {//防止异常处理影响退格
@@ -994,43 +1146,107 @@ public class MainActivity extends AppCompatActivity {
                                         case "8":
                                         case "9":
                                         case ".":
-                                            outNumber=outNumber+bdsnumber;
+                                            outNumber = outNumber + bdsnumber;
                                             //numberIn = 1;//默认前方的为数字
                                             break;
+                                        case "-":
+                                            if ((l > 1) && (midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("-") ||
+                                                    midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("*") || midinput.substring(l - 2, l - 1).equals("/"))) {
+                                                outNumber = outNumber + bdsnumber;
+                                            } else tag = false;
                                         default:
-                                            tag=false;
+                                            tag = false;
 
 
                                     }
-                                    if(l==1){
+                                    if (l == 1) {
                                         break;
                                     }
                                     l--;
 
 
                                 }
-                                midinput=midinput.substring(0,midinput.length()-outNumber.length());
-                                String out2="";
-                                for (int i=0;i<outNumber.length();i++){
-                                    String bdnumber = outNumber.substring(outNumber.length() - 1-i, outNumber.length()-i);
-                                    out2=out2+bdnumber;
+                                midinput = midinput.substring(0, midinput.length() - outNumber.length());
+                                String out2 = "";
+                                for (int i = 0; i < outNumber.length(); i++) {
+                                    String bdnumber = outNumber.substring(outNumber.length() - 1 - i, outNumber.length() - i);
+                                    out2 = out2 + bdnumber;
 
                                 }
-                                double outDouble=Double.valueOf(out2)*Double.valueOf(out2);
-                                inputText.setText(midinput+String.valueOf(outDouble));
+                                double outDouble = Double.valueOf(out2) * Double.valueOf(out2);
+                                inputText.setText(midinput + String.valueOf(outDouble));
 
-                            }
-                            else if(!outText.getText().toString().equals("")){
-                                numberIn=1;
-                                midinput=outText.getText().toString();
-                                double outDouble=Double.valueOf(midinput)*Double.valueOf(midinput);
+                            } else if (!outText.getText().toString().equals("")) {
+                                numberIn = 1;
+                                midinput = outText.getText().toString();
+                                double outDouble = Double.valueOf(midinput) * Double.valueOf(midinput);
                                 inputText.setText(String.valueOf(outDouble));
                                 outText.setText("");
 
 
-
                             }
                             break;
+//                        case R.id.buttonLog://开根号
+//                            Log.i("OnClick", "计算loga(x)");//DEBUG:测试输入
+//                            outText = (EditText) findViewById(R.id.OutputTextView2);
+//                            inputText = (TextView) findViewById(R.id.InputTextView);
+//                            AlertDialog.Builder dialogRoot = new AlertDialog.Builder(MainActivity.this);
+//                            dialogRoot.setTitle("输入要运算的log的数（或表达式）");
+//                            final LayoutInflater logDialog = getLayoutInflater();
+//                            final View logView = logDialog.inflate(R.layout.log_layout, null);
+//                            dialogRoot.setView(logView);
+//                            final EditText ET_x = logView.findViewById(R.id.textXin);
+//                            final EditText ET_a = logView.findViewById(R.id.textAin);
+//                            if (!outText.getText().toString().equals("") || outText.getText() == null) {
+//                                logNegativeS=inputText.getText().toString();
+//                                inputText.setText("");
+//                                ET_x.setText(outText.getText().toString());
+//
+//                            }
+//                            else {
+//                                logNegativeS="";
+//                            }
+//                            dialogRoot.setPositiveButton("计算", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    //Toast.makeText(MainActivity.this,"填写确定监听事件",Toast.LENGTH_SHORT).show();
+//                                    if(!ET_a.getText().toString().equals("")&&!ET_x.getText().toString().equals("")){
+//                                        double x=CalculationCode.calculate(ET_x.getText().toString());
+//                                        double a=CalculationCode.calculate(ET_a.getText().toString());
+//                                        double d=Math.log(a)/Math.log(x);
+//                                        if(!logNegativeS.equals("")){//判断outText是否有值
+//
+//                                            inputText.setText(String.valueOf(d));
+//                                        }//outText有值
+//                                        else{
+//                                            midinput=inputText.getText().toString();
+//                                            inputText.setText(midinput+d);
+//                                        }
+//                                        outText.setText("");
+//                                    }
+//                                    else{
+//                                        Toast.makeText(MainActivity.this,"必须大于零，二者均不能为空",Toast.LENGTH_LONG);
+//                                    }
+//
+//                                }
+//                            });
+//                            dialogRoot.setNegativeButton("取消", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialog, int which) {
+//                                    if(logNegativeS.equals("")){
+//
+//                                    }
+//                                    else{
+//                                        inputText.setText(logNegativeS);
+//
+//                                    }
+//
+//                                }
+//                            });
+//                            dialogRoot.show();
+//                            numberIn = 1;
+//
+//                            break;
 
 
                         default:
@@ -1039,9 +1255,8 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
             };//不同界面装载不同的按键控制器
-            numberIn=1;
-        }
-        ArrayList<String> ALLLists = new ArrayList<String>();
+            numberIn = 1;
+        }//竖屏布局与监听器
         /*****创建数字公共按键监听器*******/
         View.OnClickListener AllNumberClickListener = new View.OnClickListener() {
             @Override
@@ -1052,21 +1267,19 @@ public class MainActivity extends AppCompatActivity {
                 outText.setKeyListener(null);//不可粘贴
                 TextView inputText;
                 String midinput;
-                outText = (EditText) findViewById(R.id.OutputTextView2);
-                inputText = (TextView) findViewById(R.id.InputTextView);
 
                 switch (view.getId()) {
                     case R.id.button0:
                         Log.i("OnClick", "0");//DEBUG:测试输入
                         outText = (EditText) findViewById(R.id.OutputTextView2);
                         inputText = (TextView) findViewById(R.id.InputTextView);
-                        if (!outText.getText().equals("")) {
-                            outText.setFocusableInTouchMode(true);
-                            outText.setFocusable(true);
+                        if (!outText.getText().toString().equals("") && outText.getText() != null) {
+
                             outText.setText("");//如果结果有值，输入数字时则清空
-                            outText.setFocusableInTouchMode(false);
-                            outText.setFocusable(false);
+                            inputText.setText("");
+
                         }
+
                         midinput = inputText.getText().toString();
                         midinput = midinput + '0';
                         inputText.setText(midinput);
@@ -1076,29 +1289,29 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("OnClick", "1");//DEBUG:测试输入
                         outText = (EditText) findViewById(R.id.OutputTextView2);
                         inputText = (TextView) findViewById(R.id.InputTextView);
-                        if (!outText.getText().equals("")) {
-                            outText.setFocusableInTouchMode(true);
-                            outText.setFocusable(true);
+                        if (!outText.getText().toString().equals("") && outText.getText() != null) {
+
                             outText.setText("");//如果结果有值，输入数字时则清空
-                            outText.setFocusableInTouchMode(false);
-                            outText.setFocusable(false);
+                            inputText.setText("");
+
                         }
+
                         midinput = inputText.getText().toString();
                         midinput = midinput + '1';
                         inputText.setText(midinput);
                         numberIn++;
                         break;
                     case R.id.button2:
-                        Log.i("OnClick", "2");//DEBUG:测试输入
+                        Log.i("OnClick", "6");//DEBUG:测试输入
                         outText = (EditText) findViewById(R.id.OutputTextView2);
                         inputText = (TextView) findViewById(R.id.InputTextView);
-                        if (!outText.getText().equals("")) {
-                            outText.setFocusableInTouchMode(true);
-                            outText.setFocusable(true);
+                        if (!outText.getText().toString().equals("") && outText.getText() != null) {
+
                             outText.setText("");//如果结果有值，输入数字时则清空
-                            outText.setFocusableInTouchMode(false);
-                            outText.setFocusable(false);
+                            inputText.setText("");
+
                         }
+
                         midinput = inputText.getText().toString();
                         midinput = midinput + '2';
                         inputText.setText(midinput);
@@ -1108,13 +1321,13 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("OnClick", "3");//DEBUG:测试输入
                         outText = (EditText) findViewById(R.id.OutputTextView2);
                         inputText = (TextView) findViewById(R.id.InputTextView);
-                        if (!outText.getText().equals("")) {
-                            outText.setFocusableInTouchMode(true);
-                            outText.setFocusable(true);
+                        if (!outText.getText().toString().equals("") && outText.getText() != null) {
+
                             outText.setText("");//如果结果有值，输入数字时则清空
-                            outText.setFocusableInTouchMode(false);
-                            outText.setFocusable(false);
+                            inputText.setText("");
+
                         }
+
                         midinput = inputText.getText().toString();
                         midinput = midinput + '3';
                         inputText.setText(midinput);
@@ -1124,13 +1337,13 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("OnClick", "4");//DEBUG:测试输入
                         outText = (EditText) findViewById(R.id.OutputTextView2);
                         inputText = (TextView) findViewById(R.id.InputTextView);
-                        if (!outText.getText().equals("")) {
-                            outText.setFocusableInTouchMode(true);
-                            outText.setFocusable(true);
+                        if (!outText.getText().toString().equals("") && outText.getText() != null) {
+
                             outText.setText("");//如果结果有值，输入数字时则清空
-                            outText.setFocusableInTouchMode(false);
-                            outText.setFocusable(false);
+                            inputText.setText("");
+
                         }
+
                         midinput = inputText.getText().toString();
                         midinput = midinput + '4';
                         inputText.setText(midinput);
@@ -1140,13 +1353,13 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("OnClick", "5");//DEBUG:测试输入
                         outText = (EditText) findViewById(R.id.OutputTextView2);
                         inputText = (TextView) findViewById(R.id.InputTextView);
-                        if (!outText.getText().equals("")) {
-                            outText.setFocusableInTouchMode(true);
-                            outText.setFocusable(true);
+                        if (!outText.getText().toString().equals("") && outText.getText() != null) {
+
                             outText.setText("");//如果结果有值，输入数字时则清空
-                            outText.setFocusableInTouchMode(false);
-                            outText.setFocusable(false);
+                            inputText.setText("");
+
                         }
+
                         midinput = inputText.getText().toString();
                         midinput = midinput + '5';
                         inputText.setText(midinput);
@@ -1156,13 +1369,13 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("OnClick", "6");//DEBUG:测试输入
                         outText = (EditText) findViewById(R.id.OutputTextView2);
                         inputText = (TextView) findViewById(R.id.InputTextView);
-                        if (!outText.getText().equals("")) {
-                            outText.setFocusableInTouchMode(true);
-                            outText.setFocusable(true);
+                        if (!outText.getText().toString().equals("") && outText.getText() != null) {
+
                             outText.setText("");//如果结果有值，输入数字时则清空
-                            outText.setFocusableInTouchMode(false);
-                            outText.setFocusable(false);
+                            inputText.setText("");
+
                         }
+
                         midinput = inputText.getText().toString();
                         midinput = midinput + '6';
                         inputText.setText(midinput);
@@ -1172,12 +1385,11 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("OnClick", "7");//DEBUG:测试输入
                         outText = (EditText) findViewById(R.id.OutputTextView2);
                         inputText = (TextView) findViewById(R.id.InputTextView);
-                        if (!outText.getText().equals("")) {
-                            outText.setFocusableInTouchMode(true);
-                            outText.setFocusable(true);
+                        if (!outText.getText().toString().equals("") && outText.getText() != null) {
+
                             outText.setText("");//如果结果有值，输入数字时则清空
-                            outText.setFocusableInTouchMode(false);
-                            outText.setFocusable(false);
+                            inputText.setText("");
+
                         }
                         midinput = inputText.getText().toString();
                         midinput = midinput + '7';
@@ -1188,13 +1400,13 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("OnClick", "8");//DEBUG:测试输入
                         outText = (EditText) findViewById(R.id.OutputTextView2);
                         inputText = (TextView) findViewById(R.id.InputTextView);
-                        if (!outText.getText().equals("")) {
-                            outText.setFocusableInTouchMode(true);
-                            outText.setFocusable(true);
+                        if (!outText.getText().toString().equals("") && outText.getText() != null) {
+
                             outText.setText("");//如果结果有值，输入数字时则清空
-                            outText.setFocusableInTouchMode(false);
-                            outText.setFocusable(false);
+                            inputText.setText("");
+
                         }
+
                         midinput = inputText.getText().toString();
                         midinput = midinput + '8';
                         inputText.setText(midinput);
@@ -1204,13 +1416,13 @@ public class MainActivity extends AppCompatActivity {
                         Log.i("OnClick", "9");//DEBUG:测试输入
                         outText = (EditText) findViewById(R.id.OutputTextView2);
                         inputText = (TextView) findViewById(R.id.InputTextView);
-                        if (!outText.getText().equals("")) {
-                            outText.setFocusableInTouchMode(true);
-                            outText.setFocusable(true);
+                        if (!outText.getText().toString().equals("") && outText.getText() != null) {
+
                             outText.setText("");//如果结果有值，输入数字时则清空
-                            outText.setFocusableInTouchMode(false);
-                            outText.setFocusable(false);
+                            inputText.setText("");
+
                         }
+
                         midinput = inputText.getText().toString();
                         midinput = midinput + '9';
                         inputText.setText(midinput);
@@ -1219,7 +1431,7 @@ public class MainActivity extends AppCompatActivity {
                     default:
 
 
-                }
+                }//数字按钮
 
 
             }
@@ -1240,7 +1452,7 @@ public class MainActivity extends AppCompatActivity {
         buttonNumber[9] = (Button) findViewById(R.id.button9);
         for (int i = 0; i <= 9; i++) {
             buttonNumber[i].setOnClickListener(AllNumberClickListener);
-        }
+        }//数字绑定通用按钮布局
         /*********************通用布局*********************************/
         //获取，加，减，乘，除，
         // 平方，根号,括号左，括号右，退格, 清空, 等于
