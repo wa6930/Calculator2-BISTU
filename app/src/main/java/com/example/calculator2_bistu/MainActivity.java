@@ -993,6 +993,7 @@ public class MainActivity extends AppCompatActivity {
                                             case 0://二进制
                                                 midStr=editIn1.getText().toString();
                                                 midInt=Integer.parseInt(midStr,2);
+                                                //test
                                                 break;
                                             case 1://十进制
                                                 midInt=Integer.valueOf(editIn1.getText().toString());
