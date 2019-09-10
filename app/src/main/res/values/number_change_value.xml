@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="NumberType">
+        <item >二进制</item>
+        <item >十进制</item>
+        <item >八进制</item>
+        <item >十六进制</item>
+
+    </string-array>
+    <string-array name="MoneyType">
+        <item >人民币</item>
+        <item >美元</item>
+        <item >英镑</item>
+        <item >韩元</item>
+
+    </string-array>
+</resources>

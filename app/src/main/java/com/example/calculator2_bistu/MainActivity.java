@@ -5,9 +5,12 @@ import android.content.res.Configuration;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,6 +24,8 @@ public class MainActivity extends AppCompatActivity {
     private int bracketPoint = 0;//用来防止左右括号不对应
     private int numberIn = 0;
     private String logNegativeS="";//暂存log里的inputText，取消时方便恢复
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -760,12 +765,484 @@ public class MainActivity extends AppCompatActivity {
                             numberIn = 1;
 
                             break;
+                        case R.id.buttonE:
+                            if(!outText.getText().toString().equals("")){
+                                outText.setText("");
+                                inputText.setText(String.valueOf(Math.E));
+                            }
+                            else{
+                                midinput=inputText.getText().toString();
+                                inputText.setText(midinput+Math.E);
+                            }
+                            numberIn=1;
+                            break;
+                        case R.id.buttonXshift1:
+                            Log.i("OnClick", "X!");//DEBUG:测试输入
+                            outText = (EditText) findViewById(R.id.OutputTextView2);
+                            inputText = (TextView) findViewById(R.id.InputTextView);
+                            if ((outText.getText().toString().equals("") || outText.getText() == null) && (numberIn != 0)
+                                    && !inputText.getText().toString().equals("") && inputText.getText() != null) {
+                                midinput = inputText.getText().toString();
+                                int l = midinput.length();
+                                Log.i(TAG, "onClickPercentage: " + l);
+                                boolean tag = true;
+                                String outNumber = "";
+                                while (tag == true) {
+                                    String bdsnumber = midinput.substring(l - 1, l);
+                                    Log.i(TAG, "onClickBDsnumber: " + bdsnumber);
+                                    switch (bdsnumber) {//防止异常处理影响退格
+                                        case "0":
+                                        case "1":
+                                        case "2":
+                                        case "3":
+                                        case "4":
+                                        case "5":
+                                        case "6":
+                                        case "7":
+                                        case "8":
+                                        case "9":
+                                        case ".":
+                                            outNumber = outNumber + bdsnumber;
+                                            //numberIn = 1;//默认前方的为数字
+                                            break;
+                                        case "-":
+                                            if ((l > 1) && (midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("-") ||
+                                                    midinput.substring(l - 2, l - 1).equals("+") || midinput.substring(l - 2, l - 1).equals("*") || midinput.substring(l - 2, l - 1).equals("/"))) {
+                                                outNumber = outNumber + bdsnumber;
+                                            } else tag = false;
+                                        default:
+                                            tag = false;
+
+
+                                    }
+                                    if (l == 1) {
+                                        break;
+                                    }
+                                    l--;
+
+
+                                }
+                                midinput = midinput.substring(0, midinput.length() - outNumber.length());
+                                String out2 = "";
+                                for (int i = 0; i < outNumber.length(); i++) {
+                                    String bdnumber = outNumber.substring(outNumber.length() - 1 - i, outNumber.length() - i);
+                                    out2 = out2 + bdnumber;
+
+                                }
+                                int outint1 = Integer.valueOf(out2);
+                                double outint2 = 1;
+                                for(int i=outint1;i>=1;i--){
+                                    outint2=outint2*i;
+
+                                }
+                                inputText.setText(midinput+outint2);
+
+                            } else if (!outText.getText().toString().equals("")) {
+                                numberIn = 1;
+                                midinput = outText.getText().toString();
+                                int outint1 = Integer.valueOf(midinput);
+                                double outint2 = 1;
+                                for(int i=outint1;i>=1;i--){
+                                    outint2=outint2*i;
+
+                                }
+
+                                inputText.setText(String.valueOf(outint2));
+                                outText.setText("");
+
+
+                            }
+                            break;
+                        case R.id.buttonLongchang://长度转换
+                            Log.i("OnClick", "开启长度转换窗口");//DEBUG:测试输入
+                            outText = (EditText) findViewById(R.id.OutputTextView2);
+                            inputText = (TextView) findViewById(R.id.InputTextView);
+                            AlertDialog.Builder LongChange = new AlertDialog.Builder(MainActivity.this);
+                            LongChange.setTitle("长度换算");
+                            final LayoutInflater longCD = getLayoutInflater();
+                            final View longView = longCD.inflate(R.layout.long_change_layout, null);
+                            LongChange.setView(longView);
+                            final EditText textKM = longView.findViewById(R.id.editKm);
+                            final EditText textM = longView.findViewById(R.id.editM);
+                            final EditText textCM = longView.findViewById(R.id.editCm);
+                            Button buttonLchange=longView.findViewById(R.id.buttonLCchange);
+                            Button buttonLcancel=longView.findViewById(R.id.buttonLCchance);
+                            buttonLcancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    textKM.setText("");
+                                    textCM.setText("");
+                                    textM.setText("");
+                                }
+                            });
+                            buttonLchange.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if(!textKM.getText().toString().equals("")){
+                                        double km=Double.valueOf(textKM.getText().toString());
+                                        textM.setText(String.valueOf(km*1000));
+                                        textCM.setText(String.valueOf(km*1000000));
+                                    }
+                                    else if(!textM.getText().toString().equals("")){
+                                        double m=Double.valueOf(textM.getText().toString());
+                                        textKM.setText(String.valueOf(m/1000));
+                                        textCM.setText(String.valueOf(m*1000));
+
+                                    }
+                                    else if(!textCM.getText().toString().equals("")){
+                                        double cm=Double.valueOf(textCM.getText().toString());
+                                        textKM.setText(String.valueOf(cm/1000000));
+                                        textM.setText(String.valueOf(cm/1000));
+
+                                    }
+                                    else
+                                        Toast.makeText(MainActivity.this,"请输入数字",Toast.LENGTH_LONG);
+                                }
+                            });
+
+                            LongChange.setNegativeButton("关闭", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+
+                                }
+                            });
+                            LongChange.show();
+                            break;
+                        case R.id.buttonWChange://重量转换
+                            Log.i("OnClick", "开启重量转换窗口");//DEBUG:测试输入
+                            outText = (EditText) findViewById(R.id.OutputTextView2);
+                            inputText = (TextView) findViewById(R.id.InputTextView);
+                            AlertDialog.Builder WeightChange = new AlertDialog.Builder(MainActivity.this);
+                            WeightChange.setTitle("重量换算");
+                            final LayoutInflater WeightCD = getLayoutInflater();
+                            final View WeightView = WeightCD.inflate(R.layout.weight_change_layout, null);
+                            WeightChange.setView(WeightView);
+                            final EditText textT = WeightView.findViewById(R.id.editT);
+                            final EditText textKg = WeightView.findViewById(R.id.editKg);
+                            final EditText textG = WeightView.findViewById(R.id.editG);
+                            Button buttonWchange=WeightView.findViewById(R.id.buttonW_change);
+                            Button buttonWcancel=WeightView.findViewById(R.id.buttonW_chance);
+                            buttonWcancel.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    textT.setText("");
+                                    textKg.setText("");
+                                    textG.setText("");
+                                }
+                            });
+                            buttonWchange.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    if(!textT.getText().toString().equals("")){
+                                        double km=Double.valueOf(textT.getText().toString());
+                                        textKg.setText(String.valueOf(km*1000));
+                                        textG.setText(String.valueOf(km*1000000));
+                                    }
+                                    else if(!textKg.getText().toString().equals("")){
+                                        double m=Double.valueOf(textKg.getText().toString());
+                                        textT.setText(String.valueOf(m/1000));
+                                        textG.setText(String.valueOf(m*1000));
+
+                                    }
+                                    else if(!textG.getText().toString().equals("")){
+                                        double cm=Double.valueOf(textG.getText().toString());
+                                        textT.setText(String.valueOf(cm/1000000));
+                                        textKg.setText(String.valueOf(cm/1000));
+
+                                    }
+                                    else
+                                        Toast.makeText(MainActivity.this,"请输入数字",Toast.LENGTH_LONG);
+                                }
+                            });
+
+                            WeightChange.setNegativeButton("关闭", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+
+                                }
+                            });
+                            WeightChange.show();
+                            break;
+                        case R.id.buttonNumberChange://进制转换
+                            Log.i("OnClick", "开启进制转换窗口");//DEBUG:测试输入
+                            outText = (EditText) findViewById(R.id.OutputTextView2);
+                            inputText = (TextView) findViewById(R.id.InputTextView);
+                            AlertDialog.Builder NumberChange = new AlertDialog.Builder(MainActivity.this);
+                            NumberChange.setTitle("重量换算");
+                            final LayoutInflater NumberCD = getLayoutInflater();
+                            final View NumberView = NumberCD.inflate(R.layout.linear_number_change_layout, null);
+                            NumberChange.setView(NumberView);
+                            final EditText editIn1 = NumberView.findViewById(R.id.editInput1);
+                            final EditText editIn2 = NumberView.findViewById(R.id.editInput2);
+                            final Spinner  spinner1=NumberView.findViewById(R.id.spinner1);//获取两下拉栏
+                            final Spinner spinner2=NumberView.findViewById(R.id.spinner2);
+                            Button buttonNchange=NumberView.findViewById(R.id.buttonN_change);
+                            Button buttonNchance=NumberView.findViewById(R.id.buttonN_chance);
+                            buttonNchange.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    int s1=spinner1.getSelectedItemPosition();
+                                    int s2=spinner2.getSelectedItemPosition();
+                                    Log.i(TAG, "onClick:spinner1 position:"+s1+"spinner2:"+s2);//测试位置
+                                    Integer midInt = null;
+                                    String midStr;
+                                    if(!editIn1.getText().toString().equals("")){//第一个空不为空
+                                        switch (s1){//输入处理
+                                            case 0://二进制
+                                                midStr=editIn1.getText().toString();
+                                                midInt=Integer.parseInt(midStr,2);
+                                                break;
+                                            case 1://十进制
+                                                midInt=Integer.valueOf(editIn1.getText().toString());
+                                                break;
+                                            case 2://八进制
+                                                midStr=editIn1.getText().toString();
+                                                midInt=Integer.parseInt(midStr,8);
+                                                break;
+                                            case 3://十六进制
+                                                midStr=editIn1.getText().toString();
+                                                midInt=Integer.parseInt(midStr,16);
+                                                break;
+                                            default:
+                                        }
+                                        switch (s2){//输出处理
+                                            case 0://二进制
+                                                midStr=Integer.toBinaryString(midInt);
+                                                editIn2.setText(midStr);
+                                                break;
+                                            case 1://十进制
+                                                editIn2.setText(String.valueOf(midInt));
+                                                break;
+                                            case 2://八进制
+                                                midStr=Integer.toOctalString(midInt);
+                                                editIn2.setText(midStr);
+
+                                                break;
+                                            case 3://十六进制
+                                                midStr=Integer.toHexString(midInt);
+                                                editIn2.setText(midStr);
+                                                break;
+                                            default:
+
+                                        }
+
+                                    }
+                                    else if(!editIn2.getText().toString().equals("")){//第二个空不为空
+                                        switch (s2){//输入处理
+                                            case 0://二进制
+                                                midStr=editIn2.getText().toString();
+                                                midInt=Integer.parseInt(midStr,2);
+                                                break;
+                                            case 1://十进制
+                                                midInt=Integer.valueOf(editIn2.getText().toString());
+                                                break;
+                                            case 2://八进制
+                                                midStr=editIn2.getText().toString();
+                                                midInt=Integer.parseInt(midStr,8);
+                                                break;
+                                            case 3://十六进制
+                                                midStr=editIn2.getText().toString();
+                                                midInt=Integer.parseInt(midStr,16);
+                                                break;
+                                            default:
+                                        }
+                                        switch (s1){//输出处理
+                                            case 0://二进制
+                                                midStr=Integer.toBinaryString(midInt);
+                                                editIn1.setText(midStr);
+                                                break;
+                                            case 1://十进制
+                                                editIn1.setText(String.valueOf(midInt));
+                                                break;
+                                            case 2://八进制
+                                                midStr=Integer.toOctalString(midInt);
+                                                editIn1.setText(midStr);
+
+                                                break;
+                                            case 3://十六进制
+                                                midStr=Integer.toHexString(midInt);
+                                                editIn1.setText(midStr);
+                                                break;
+                                            default:
+
+                                        }
+
+                                    }
+                                    else{
+                                        //无操作
+                                    }
+
+                                }
+                            });
+                            buttonNchance.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    int s1=spinner1.getSelectedItemPosition();
+                                    editIn1.setText("");
+                                    editIn2.setText("");
+
+
+                                }
+                            });
+
+                            NumberChange.setNegativeButton("关闭", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+
+                                }
+                            });
+                            NumberChange.show();
+                            break;
+
+                        case R.id.buttonMoney://实时汇率
+                            Log.i("OnClick", "开启实时汇率窗口");//DEBUG:测试输入
+                           //TODO
+                            //免费api不太好找
+                            break;
+
+                        case R.id.buttonData://进制转换
+                            Log.i("OnClick", "开启日期转换");//DEBUG:测试输入
+                            outText = (EditText) findViewById(R.id.OutputTextView2);
+                            inputText = (TextView) findViewById(R.id.InputTextView);
+                            AlertDialog.Builder DataChange = new AlertDialog.Builder(MainActivity.this);
+                            DataChange.setTitle("日期换算");
+                            final LayoutInflater DataCD = getLayoutInflater();
+                            final View dataView = DataCD.inflate(R.layout.linear_datas_change_layout, null);
+                            DataChange.setView(dataView);
+//                            final EditText editIn1 = NumberView.findViewById(R.id.editInput1);
+//                            final EditText editIn2 = NumberView.findViewById(R.id.editInput2);
+//                            final Spinner  spinner1=NumberView.findViewById(R.id.spinner1);//获取两下拉栏
+//                            final Spinner spinner2=NumberView.findViewById(R.id.spinner2);
+//                            Button buttonNchange=NumberView.findViewById(R.id.buttonN_change);
+//                            Button buttonNchance=NumberView.findViewById(R.id.buttonN_chance);
+//                            buttonNchange.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    int s1=spinner1.getSelectedItemPosition();
+//                                    int s2=spinner2.getSelectedItemPosition();
+//                                    Log.i(TAG, "onClick:spinner1 position:"+s1+"spinner2:"+s2);//测试位置
+//                                    Integer midInt = null;
+//                                    String midStr;
+//                                    if(!editIn1.getText().toString().equals("")){//第一个空不为空
+//                                        switch (s1){//输入处理
+//                                            case 0://二进制
+//                                                midStr=editIn1.getText().toString();
+//                                                midInt=Integer.parseInt(midStr,2);
+//                                                break;
+//                                            case 1://十进制
+//                                                midInt=Integer.valueOf(editIn1.getText().toString());
+//                                                break;
+//                                            case 2://八进制
+//                                                midStr=editIn1.getText().toString();
+//                                                midInt=Integer.parseInt(midStr,8);
+//                                                break;
+//                                            case 3://十六进制
+//                                                midStr=editIn1.getText().toString();
+//                                                midInt=Integer.parseInt(midStr,16);
+//                                                break;
+//                                            default:
+//                                        }
+//                                        switch (s2){//输出处理
+//                                            case 0://二进制
+//                                                midStr=Integer.toBinaryString(midInt);
+//                                                editIn2.setText(midStr);
+//                                                break;
+//                                            case 1://十进制
+//                                                editIn2.setText(String.valueOf(midInt));
+//                                                break;
+//                                            case 2://八进制
+//                                                midStr=Integer.toOctalString(midInt);
+//                                                editIn2.setText(midStr);
+//
+//                                                break;
+//                                            case 3://十六进制
+//                                                midStr=Integer.toHexString(midInt);
+//                                                editIn2.setText(midStr);
+//                                                break;
+//                                            default:
+//
+//                                        }
+//
+//                                    }
+//                                    else if(!editIn2.getText().toString().equals("")){//第二个空不为空
+//                                        switch (s2){//输入处理
+//                                            case 0://二进制
+//                                                midStr=editIn2.getText().toString();
+//                                                midInt=Integer.parseInt(midStr,2);
+//                                                break;
+//                                            case 1://十进制
+//                                                midInt=Integer.valueOf(editIn2.getText().toString());
+//                                                break;
+//                                            case 2://八进制
+//                                                midStr=editIn2.getText().toString();
+//                                                midInt=Integer.parseInt(midStr,8);
+//                                                break;
+//                                            case 3://十六进制
+//                                                midStr=editIn2.getText().toString();
+//                                                midInt=Integer.parseInt(midStr,16);
+//                                                break;
+//                                            default:
+//                                        }
+//                                        switch (s1){//输出处理
+//                                            case 0://二进制
+//                                                midStr=Integer.toBinaryString(midInt);
+//                                                editIn1.setText(midStr);
+//                                                break;
+//                                            case 1://十进制
+//                                                editIn1.setText(String.valueOf(midInt));
+//                                                break;
+//                                            case 2://八进制
+//                                                midStr=Integer.toOctalString(midInt);
+//                                                editIn1.setText(midStr);
+//
+//                                                break;
+//                                            case 3://十六进制
+//                                                midStr=Integer.toHexString(midInt);
+//                                                editIn1.setText(midStr);
+//                                                break;
+//                                            default:
+//
+//                                        }
+//
+//                                    }
+//                                    else{
+//                                        //无操作
+//                                    }
+//
+//                                }
+//                            });
+//                            buttonNchance.setOnClickListener(new View.OnClickListener() {
+//                                @Override
+//                                public void onClick(View view) {
+//                                    int s1=spinner1.getSelectedItemPosition();
+//                                    editIn1.setText("");
+//                                    editIn2.setText("");
+//
+//
+//                                }
+//                            });
+
+                            DataChange.setNegativeButton("关闭", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+
+
+                                }
+                            });
+                            DataChange.show();
+                            break;
+
+
                         default:
 
 
                     }
                 }
             };
+            /*******************横屏按钮绑定************************/
             Button buttonSin = (Button) findViewById(R.id.buttonSin);//sin
             buttonSin.setOnClickListener(normalOperationListener);
             Button buttonCos = (Button) findViewById(R.id.buttonCos);//cos
@@ -776,6 +1253,22 @@ public class MainActivity extends AppCompatActivity {
             buttonLn.setOnClickListener(normalOperationListener);
             Button buttonLog = (Button) findViewById(R.id.buttonLog);//log
             buttonLog.setOnClickListener(normalOperationListener);
+            Button buttonE=(Button)findViewById(R.id.buttonE);//E
+            buttonE.setOnClickListener(normalOperationListener);
+            Button buttonXshitf1=(Button)findViewById(R.id.buttonXshift1);//X!
+            buttonXshitf1.setOnClickListener(normalOperationListener);
+            Button buttonLChange=(Button)findViewById(R.id.buttonLongchang);//长度换算
+            buttonLChange.setOnClickListener(normalOperationListener);
+            Button buttonWChange=(Button)findViewById(R.id.buttonWChange);//重量换算
+            buttonWChange.setOnClickListener(normalOperationListener);
+            Button buttonNumberChange=(Button)findViewById(R.id.buttonNumberChange);//进制转换
+            buttonNumberChange.setOnClickListener(normalOperationListener);
+            Button buttonMoney=(Button)findViewById(R.id.buttonMoney);//因为api关系，未实现
+            buttonMoney.setOnClickListener(normalOperationListener);
+            Button buttonData=(Button)findViewById(R.id.buttonData);
+            buttonData.setOnClickListener(normalOperationListener);
+
+
 
 
         }//横屏布局与监听器
@@ -1494,4 +1987,45 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu,menu); //通过getMenuInflater()方法得到MenuInflater对象，再调用它的inflate()方法就可以给当前活动创建菜单了，第一个参数：用于指定我们通过哪一个资源文件来创建菜单；第二个参数：用于指定我们的菜单项将添加到哪一个Menu对象当中。
+        return true; // true：允许创建的菜单显示出来，false：创建的菜单将无法显示。
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+
+            if(item.getItemId()==R.id.id_help_item) {
+                //Toast.makeText(MainActivity.this,"作者：耳机壳",Toast.LENGTH_LONG);
+                AlertDialog.Builder dialog=new AlertDialog.Builder(MainActivity.this);
+                dialog.setTitle("帮助");
+                LayoutInflater myLayout=getLayoutInflater();//获得layout
+                final View view1=myLayout.inflate(R.layout.help_layout,null);//通过dialog获得视图
+                dialog.setView(view1);
+                dialog.setPositiveButton("知道了", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+
+                dialog.show();
+
+
+            }
+            else{
+                Toast.makeText(MainActivity.this,"未绑定的菜单项",Toast.LENGTH_LONG);
+            }
+
+
+                return true;
+        }
+
+
+
+
+
 }

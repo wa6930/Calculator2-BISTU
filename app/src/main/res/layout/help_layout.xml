@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="本程序仅为学习所写，课程作业所写。\n作者：耳机壳\n本计算机通过栈的方式实现中缀后缀切换从而完成计算\n
+注意事项：\n① X!运算请不要输入小数，只有整数才能计算阶乘\n② 由于负号和减号共用，多次点击减号可能导致程序崩溃\n③ 除去dialog之外，程序不支持键盘输入\n④ 因为任务紧时间短，部分结果的正确性没有反复验证，不排除bug\n⑤ 未考虑超过double范围的大数情况\n⑥
+请不要连点等号"
+        android:textSize="10dp"
+
+        />
+</LinearLayout>

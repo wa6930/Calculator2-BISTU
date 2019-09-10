@@ -18,7 +18,7 @@
         android:text="7"
         android:textSize="8pt"
         app:layout_constraintEnd_toStartOf="@+id/button8"
-        app:layout_constraintTop_toBottomOf="@+id/buttonNNULL" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonNumberChange" />
 
     <Button
         android:id="@+id/buttonPercentage"
@@ -44,7 +44,7 @@
         android:text="C"
         android:textColor="#2263E5"
         android:textSize="8pt"
-        app:layout_constraintEnd_toStartOf="@+id/buttonNullz"
+        app:layout_constraintEnd_toStartOf="@+id/buttonLongchang"
         app:layout_constraintTop_toBottomOf="@+id/OutputTextView2" />
 
     <Button
@@ -87,11 +87,11 @@
         android:text="tan"
         android:textAllCaps="false"
         android:textSize="8pt"
-        app:layout_constraintEnd_toStartOf="@+id/buttonNNULL"
+        app:layout_constraintEnd_toStartOf="@+id/buttonNumberChange"
         app:layout_constraintTop_toBottomOf="@+id/buttonRoot" />
 
     <Button
-        android:id="@+id/buttonNull2"
+        android:id="@+id/buttonWChange"
         android:layout_width="90dp"
         android:layout_height="35dp"
 
@@ -99,7 +99,8 @@
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
         android:background="@drawable/bt2_all_button_selector"
-        android:text="null"
+        android:text="重量换算"
+        android:textColor="#2263E5"
         android:textSize="8pt"
         app:layout_constraintEnd_toStartOf="@+id/buttonSquare"
         app:layout_constraintTop_toBottomOf="@+id/OutputTextView2" />
@@ -133,7 +134,7 @@
         app:layout_constraintTop_toBottomOf="@+id/OutputTextView2" />
 
     <Button
-        android:id="@+id/buttonNullz"
+        android:id="@+id/buttonLongchang"
         android:layout_width="90dp"
         android:layout_height="35dp"
         android:layout_marginTop="4dp"
@@ -141,9 +142,10 @@
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
         android:background="@drawable/bt2_all_button_selector"
-        android:text="null"
+        android:text="长度换算"
+        android:textColor="#2263E5"
         android:textSize="8pt"
-        app:layout_constraintEnd_toStartOf="@+id/buttonNull2"
+        app:layout_constraintEnd_toStartOf="@+id/buttonWChange"
         app:layout_constraintTop_toBottomOf="@+id/OutputTextView2" />
 
     <Button
@@ -351,7 +353,7 @@
         android:textSize="10pt"
         app:layout_constraintBottom_toTopOf="@+id/button8"
         app:layout_constraintEnd_toStartOf="@+id/buttonMultiply"
-        app:layout_constraintTop_toBottomOf="@+id/buttonNullz" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonLongchang" />
 
     <Button
         android:id="@+id/buttonMultiply"
@@ -366,7 +368,7 @@
         android:textColor="#2263E5"
         android:textSize="8pt"
         app:layout_constraintEnd_toStartOf="@+id/buttonBack"
-        app:layout_constraintTop_toBottomOf="@+id/buttonNull2" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonWChange" />
 
     <Button
         android:id="@+id/buttonSin"
@@ -383,14 +385,14 @@
         app:layout_constraintTop_toBottomOf="@+id/buttonLbrackets" />
 
     <Button
-        android:id="@+id/buttonNNULL"
+        android:id="@+id/buttonNumberChange"
         android:layout_width="90dp"
         android:layout_height="35dp"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
         android:background="@drawable/bt2_all_button_selector"
-        android:text="NULL"
+        android:text="进制转换"
         android:textColor="#2263E5"
         android:textSize="8pt"
         app:layout_constraintEnd_toStartOf="@+id/buttonExcept"
@@ -445,7 +447,6 @@
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
         android:background="@drawable/bt2_all_button_selector"
-        android:text="NULL"
         android:textSize="8pt"
         app:layout_constraintEnd_toStartOf="@+id/buttonNNULL5"
         app:layout_constraintTop_toBottomOf="@+id/buttonLog" />
@@ -485,7 +486,6 @@
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
         android:background="@drawable/bt2_all_button_selector"
-        android:text="NULL"
         android:textSize="8pt"
         app:layout_constraintEnd_toStartOf="@+id/button4"
         app:layout_constraintTop_toBottomOf="@+id/buttonE" />
@@ -515,17 +515,17 @@
         android:text="NULL"
         android:textSize="8pt"
         app:layout_constraintEnd_toStartOf="@+id/buttonNNULL7"
-        app:layout_constraintTop_toBottomOf="@+id/buttonNNULL13" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonData" />
 
     <Button
-        android:id="@+id/buttonNNULL13"
+        android:id="@+id/buttonData"
         android:layout_width="90dp"
         android:layout_height="35dp"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
         android:background="@drawable/bt2_all_button_selector"
-        android:text="NULL"
+        android:text="日期换算"
         android:textSize="8pt"
         app:layout_constraintEnd_toStartOf="@+id/buttonNNULL3"
         app:layout_constraintTop_toBottomOf="@+id/buttonNNULL9" />
@@ -541,19 +541,19 @@
         android:text="NULL"
         android:textSize="8pt"
         app:layout_constraintEnd_toStartOf="@+id/buttonNNULL2"
-        app:layout_constraintTop_toBottomOf="@+id/buttonNNULL12" />
+        app:layout_constraintTop_toBottomOf="@+id/buttonMoney" />
 
     <Button
-        android:id="@+id/buttonNNULL12"
+        android:id="@+id/buttonMoney"
         android:layout_width="90dp"
         android:layout_height="35dp"
         android:layout_marginTop="3dp"
         android:layout_marginEnd="3dp"
         android:layout_marginRight="3dp"
         android:background="@drawable/bt2_all_button_selector"
-        android:text="NULL"
+        android:text="实时汇率"
         android:textSize="8pt"
-        app:layout_constraintEnd_toStartOf="@+id/buttonNNULL13"
+        app:layout_constraintEnd_toStartOf="@+id/buttonData"
         app:layout_constraintTop_toBottomOf="@+id/buttonXshift1" />
 
     <Button

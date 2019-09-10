@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="吨(T)" />
+
+    <EditText
+        android:id="@+id/editT"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="吨(T):请保证只有一个文本框有数"
+        android:textSize="5pt"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/textKg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="千克(kg)" />
+
+    <EditText
+        android:id="@+id/editKg"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="千克(kg):请保证只有一个文本框有数"
+        android:textSize="5pt"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/textG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="克(g)" />
+
+    <EditText
+        android:id="@+id/editG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textSize="5pt"
+        android:hint="克(g)：请保证只有一个文本框有数"
+        android:inputType="number" />
+
+
+    <Button
+        android:id="@+id/buttonW_change"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="5pt"
+        android:text="换算" />
+
+    <Button
+        android:id="@+id/buttonW_chance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="5pt"
+        android:text="清空" />
+</LinearLayout>

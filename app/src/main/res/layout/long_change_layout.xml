@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/textKm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="千米(km)" />
+
+    <EditText
+        android:id="@+id/editKm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="千米(km):请保证只有一个文本框有数"
+        android:textSize="5pt"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/textM"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="米(m)" />
+
+    <EditText
+        android:id="@+id/editM"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="米(m):请保证只有一个文本框有数"
+        android:textSize="5pt"
+        android:inputType="number" />
+
+    <TextView
+        android:id="@+id/textCm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="厘米(cm)" />
+
+    <EditText
+        android:id="@+id/editCm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:textSize="5pt"
+        android:hint="厘米(cm)：请保证只有一个文本框有数"
+        android:inputType="number" />
+
+
+    <Button
+        android:id="@+id/buttonLCchange"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="5pt"
+        android:text="换算" />
+
+    <Button
+        android:id="@+id/buttonLCchance"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="5pt"
+        android:text="清空" />
+</LinearLayout>
